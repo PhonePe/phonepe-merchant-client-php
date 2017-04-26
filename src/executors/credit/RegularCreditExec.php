@@ -39,7 +39,7 @@ class RegularCreditExec
     static function regularCredit(RegularCreditRequest $request, PhonePeClientConfig $phonePeClientConfig) {
         $url = $phonePeClientConfig->mercuryBaseUrl . '/v1/credit/';
         $args = array($request->merchantId, $request->transactionId, $request->amount, $request->header->salt->key, $request->header->salt->index);
-        $headers = 'Content-type:application/json ' . 'X-VERIFY:' . ChecksumGenerator::checkSumGenerate($args) . 'X-CALLBACK-URL:' . $request->header->callBackUri;
+        $headers = 'Content-type:application/json ' . 'X-VERIFY:' . ChecksumGenerator::checkSumGenerate($args) . ' X-CALLBACK-URL:' . $request->header->callBackUri;
         $responseArray = RequestGenerator::postRequest($url, $request, $headers);
         if ($responseArray[1]['http_code'] != 302) {
             $response = json_decode($responseArray[0]);
